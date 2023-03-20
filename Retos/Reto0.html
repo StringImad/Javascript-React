@@ -15,9 +15,39 @@
 
 <body>
 
-    <script>
 
-        
+    <input type="text" id="busqueda" placeholder="Escribe cp o nombre de la ciudad">
+    <!-- Añadimos un evento al botón de búsqueda que se ejecutará cuando se haga clic. -->
+    <button onclick="buscar()">Buscar</button>
+    <p id="resultado"></p>
+
+    <script>
+        let numeros = [{ cp: 28924, ciudad: 'Estepona' }, { cp: 28974, ciudad: 'Espa' }, { cp: 29670, ciudad: 'Marbella' }];
+
+
+        //Obtenemos los elementos HTML con los que trabajaremos:
+        const inputBusqueda = document.getElementById('busqueda');
+        const btnBuscar = document.getElementById('buscar');
+        const pResultado = document.getElementById('resultado');
+        //Dentro de la funcion obtenemos el valor del campo de búsqueda y lo convertimos a minúsculas (busqueda).
+        function buscar() {
+            const busqueda = inputBusqueda.value.toLowerCase();
+
+            const resultados = numeros
+                //Utilizamos el método filter para obtener un nuevo array
+                //con los elementos que coinciden con la búsqueda.
+                //El lowerCase para que no tengamos problemas con el caseSensitive
+                //el método includes para comprobar si el nombre de la ciudad contiene la búsqueda.
+                .filter(({ ciudad }) => ciudad.toLowerCase().includes(busqueda))
+                //metodo .map para recorrer todos los datos y darles formato
+                .map(({ cp, ciudad }) => `${cp} - ${ciudad}`)
+                //join para unir todos los datos separatos por un salto de linea
+                .join('<br>');
+            pResultado.innerHTML = resultados;
+
+        };
+
+
     </script>
 
 </body>
