@@ -18,9 +18,17 @@
       ["Mazda", "Mercedes", "Jeep",
         ["KTM", "Nissan", "Isuzu"]]];
     // A partir de esos dos arrays hacer una lista única de coches con los dos arrays (sin repeticiones)?
-    
-var carCarrakos =  cars.map()
-    //Alguien sabría decirme los coches de carrakos que no estén en cars?
+    //utilizamos el metodo flat para aplanar los arratys
+    //e infinity se utiliza para aplanar de forma recursiva 
+var carCarrakos = cars.flat(Infinity).concat(carrakos.flat(Infinity)).sort();
+
+carCarrakos = carCarrakos.map( (valor,indice,arr)=>{
+     if(indice==0)return valor;
+     if(valor!=arr[indice-1])return valor;
+ }
+ ).filter(v=>v!==undefined)
+console.log(carCarrakos);   
+//Alguien sabría decirme los coches de carrakos que no estén en cars?
 
     var cars = ["Saab", "Volvo", "BMW", ["Honda", "Toyota", ["Lexus", "Mercedes", "Lada"], "Hyunday"]];
     var buddies = [{ firstName: "Chuck", lastName: "Norris", car: "Honda" }, { firstName: "Yakie", lastName: "Chang", car: "BMV" }, { firstName: "Bruce", lastName: "Lee", car: "Honda" }, { firstName: "Steven", lastName: "Seagal", car: "Lada" }];
