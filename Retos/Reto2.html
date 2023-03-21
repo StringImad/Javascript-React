@@ -20,26 +20,81 @@
     // A partir de esos dos arrays hacer una lista única de coches con los dos arrays (sin repeticiones)?
     //utilizamos el metodo flat para aplanar los arratys
     //e infinity se utiliza para aplanar de forma recursiva 
-var carCarrakos = cars.flat(Infinity).concat(carrakos.flat(Infinity)).sort();
+    var carCarrakos = cars.flat(Infinity).concat(carrakos.flat(Infinity)).sort();
+    var carCarrakosv2 = cars.flat(Infinity).concat(carrakos.flat(Infinity)).sort();
 
-carCarrakos = carCarrakos.map( (valor,indice,arr)=>{
-     if(indice==0)return valor;
-     if(valor!=arr[indice-1])return valor;
- }
- ).filter(v=>v!==undefined)
-console.log(carCarrakos);   
-//Alguien sabría decirme los coches de carrakos que no estén en cars?
 
-    var cars = ["Saab", "Volvo", "BMW", ["Honda", "Toyota", ["Lexus", "Mercedes", "Lada"], "Hyunday"]];
+    //forma 1
+    carCarrakos = carCarrakos.map((valor, indice, array) => {
+      //se comprueba si el índice actual es igual a cero (la primera posición del array),
+      //si es así se devuelve el valor sin hacer ninguna transformación.
+      if (indice == 0) return valor;
+      //Si el índice actual es mayor que cero
+      //se compara el valor actual con el valor anterior del array(el valor con un índice un número menor)
+      //Si el valor actual es diferente del valor anterior
+      //significa que es un valor único y se devuelve sin cambios.
+      if (valor != array[indice - 1]) return valor;
+      //Si el valor actual es igual al valor anterior,
+      // significa que es un valor duplicado y se devuelve undefined,
+      if (valor == array[indice - 1]) return undefined;
+    }//filtramos todos los valores que sean undefined y elimina ese valor del nuevo array.
+    ).filter(v => v !== undefined)
+
+    console.log("car + carrakos: ", carCarrakos);
+
+    //forma 2
+    //Si el índice actual es igual al índice de la primera ocurrencia, 
+    //significa que el elemento no ha sido duplicado anteriormente y se agrega al nuevo array.
+    //si el índice actual es diferente al índice de la primera ocurrencia,
+    //significa que el elemento es un duplicado y se ignora.
+    var cochesUnicos = carCarrakosv2.filter(function (valor, index) {
+      return carCarrakosv2.indexOf(valor) === index; // eliminar los duplicados
+    });
+    console.log("car + carrakos forma 2: ", cochesUnicos);
+
+    //Alguien sabría decirme los coches de carrakos que no estén en cars?
+    var carsPlano = cars.flat(Infinity).sort();
+    console.log("car Plano: ", carsPlano)
+    var carrakosPlano = carrakos.flat(Infinity).sort();
+    console.log("carrako Plano: ", carrakosPlano)
+
+    // var carsNoCarrakos = carsPlano.filter(v => carrakosPlano.find(c => c == undefined));
+    // var carsNoCarrakos = carsPlano.filter(function (v) {return carrakosPlano.indexOf(v) === -1;});
+
+    var carrakosNoCars = carrakosPlano.filter(v => carsPlano.find(c => c == v) == undefined)
+    console.log("cars no carrakos: ", carrakosNoCars);
+
     var buddies = [{ firstName: "Chuck", lastName: "Norris", car: "Honda" }, { firstName: "Yakie", lastName: "Chang", car: "BMV" }, { firstName: "Bruce", lastName: "Lee", car: "Honda" }, { firstName: "Steven", lastName: "Seagal", car: "Lada" }];
-//-Nombre y apellidos de los buddies que usan un Honda
+    //-Nombre y apellidos de los buddies que usan un Honda
 
-//-Marcas utilizadas por los buddies
+    console.log("Propietarios Hondas: ", buddies
+      //Utilizamos el método filter para obtener un nuevo array
+      //con los elementos que coinciden con la búsqueda.
+      //El lowerCase para que no tengamos problemas con el caseSensitive
+      .filter(({ car }) => car == "Honda")
+      //metodo .map para recorrer todos los datos y darles formato
+      .map(({ firstName, lastName }) => `${firstName} - ${lastName}`)
+    );
 
-//-Marcas no utilizadas por los buddies.
+    //-Marcas utilizadas por los buddies
+    console.log("Marcas utilizadas en buddies: ", buddies.map(v => v.car
+    ).sort().filter(function (car, index, array) {
+      return array.indexOf(car) === index;
+    }));
+
+    //-Marcas no utilizadas por los buddies.
+    console.log("Marcas no utilizadas en buddies: ", cochesUnicos.filter(c => c = !buddies.find(v => v.car == c)));
 
 //-Cuantas marcas han sido utilizadas
-
+    console.log("Cuantas marcas no han sido utilizadas", cochesUnicos.filter(function (brand) {
+  for (var i = 0; i < buddies.length; i++) {
+    if (buddies[i].car === brand) {
+      return false;
+    }
+  }
+  return true;
+})
+);
 //-Cuantas marcas no han sido utilizadas
 
 
