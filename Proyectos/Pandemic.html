@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<head>
+    <title>PANDEMIC</title>
+</head>
+
+<body>
+
+    <p id="txt">
+    <p>
+
+        <script>
+            let biocenosis = [
+                ['P', 'P', 'G', 'H', 'H', 'R'],
+                ['P', 'P', 'G', 'H', 'H', 'G'],
+                ['P', 'G', 'R', 'H', 'H', 'G'],
+                ['G', 'R', 'R', 'H', 'G', 'G'],
+                ['R', 'R', 'H', 'H', 'G', 'P']
+            ];
+
+            let matrizNueva = [
+                ['P', 'P', 'G', 'H', 'H', 'R'],
+                ['P', 'P', 'G', 'H', 'H', 'G'],
+                ['P', 'G', 'R', 'H', 'H', 'G'],
+                ['G', 'R', 'R', 'H', 'G', 'G'],
+                ['R', 'R', 'H', 'H', 'G', 'P']
+            ];
+
+            //calcamos la matriz, pero ahora la llenamos de valores false, para despues poder registrar las posiciones ya vistadas
+            let yaVisitadas = new Array(biocenosis.length).fill(false).map(() => new Array(biocenosis[0].length).fill(false));
+
+            console.log(biocenosis);
+            pandemic(0, 0);
+            pandemic(4, 2);
+            console.log(matrizNueva);
+
+            function pandemic(x, y) {
+                // INCLUYE TU CÓDIGO AQUÍ
+                console.log("En la fila", y, "columna ", x, "ha sido contagiado", biocenosis[y][x]);
+                console.log("En la fila", y, "columna ", x + 1, " lado D esta", biocenosis[y][x + 1]);
+                console.log("En la fila", y, "columna ", x - 1, " lado I esta", biocenosis[y][x - 1]);
+                console.log("Y ", y, " ", biocenosis[y].length)
+                if (y < 4) {
+                    console.log("En la fila", y + 1, "columna ", x, "abajo esta", biocenosis[y + 1][x]);
+                }
+                console.log("Y ", y)
+                if (y > 0) {
+                    console.log("En la fila", y - 1, "columna ", x, "arriba esta", biocenosis[y - 1][x]);
+                }
+                let especie = matrizNueva[x][y];
+
+                matrizNueva[x][y] = '';
+
+                // marca la posición como visitada
+                yaVisitadas[x][y] = true;
+
+                // comprueba las posiciones y ademas solo entra si la matriz yaVisitada es disitina a True
+                if (y > 0 && !yaVisitadas[x][y - 1] && matrizNueva[x][y - 1] !== '' && matrizNueva[x][y - 1] === especie) {
+                    pandemic(x, y - 1, yaVisitadas);
+                }
+
+                if (y < biocenosis[0].length - 1 && !yaVisitadas[x][y + 1] && matrizNueva[x][y + 1] !== '' && matrizNueva[x][y + 1] === especie) {
+                    pandemic(x, y + 1, yaVisitadas);
+                }
+
+                if (x < biocenosis.length - 1 && !yaVisitadas[x + 1][y] && matrizNueva[x + 1][y] !== '' && matrizNueva[x + 1][y] === especie) {
+                    pandemic(x + 1, y, yaVisitadas);
+                }
+
+                if (x > 0 && !yaVisitadas[x - 1][y] && matrizNueva[x - 1][y] !== '' && matrizNueva[x - 1][y] === especie) {
+                    pandemic(x - 1, y, yaVisitadas);
+                }
+            }
+
+
+        </script>
+
+</body>
+
+</html>
