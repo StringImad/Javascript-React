@@ -45,10 +45,16 @@
             ]
         };
 
+        //Se pide que hagas un programa que muestre la media de 
+        //TODAS las notas de los 3 alumnos que tenemos en nuestro JSON.
 
+        var notas = valumnos.alumnos.map(alumno => Object.values(alumno.notas)).flat();
+        //Con reduce sumamos todos los valores de las notas y las vamos acumulandor para almacenarla en el total
+        var total = notas.reduce((acumulador, nota) => acumulador + nota);
+        var media = total / notas.length;
 
-
-
+        //To fixed para redondear la cifra a 2 decimales
+        console.log("La media es: ", media.toFixed(2));
     </script>
 </body>
 

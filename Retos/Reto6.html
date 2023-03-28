@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <title>retos JavaScript</title>
+</head>
+
+<body>
+
+
+    <h1>retos JavaScript</h1>
+    <p>
+        Se pide crear los nodos de todas las frutas que cuelguen del nodo ul llamado frutas. Serán hijos del mismo.
+        Todo se tiene que hacer en una sentencia de código sin utilizar for.
+        Te mando captura de cómo quedaría la web.
+    </p>
+    <ul id="frutas"> </ul>
+
+    <script>
+
+
+        let frutas = ["aguacate", "pera", "manzana", "naranja", "tomate", "granada", "mango", "litchi", "nispero"];
+        // muestra las frutas como elementos li y su nodo padre será el ul frutas
+
+
+
+
+        frutas.map(e => { 
+            // Crear nodo de tipo Element
+            let nodoFruta = document.createElement("li");
+            // Crear nodo de tipo Text
+            let contenidoDentroLi = document.createTextNode(e)
+            // Vincular el nodo Text como hijo del nodo Element
+            nodoFruta.appendChild(contenidoDentroLi)
+            document.getElementById("frutas").appendChild(nodoFruta)
+        });
+
+    </script>
+
+</body>
+
+</html>

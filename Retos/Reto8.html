@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <title>retos JavaScript</title>
+</head>
+
+<body>
+    <h1>retos JavaScript</h1>
+    <ul id="carrakos"> </ul>
+
+    <script>
+
+        var carrakos =
+            ["Chevrolet", "Tesla", "BMW",
+                ["Honda", "Infiniti",
+                    ["Lexus", "Mercedes", "Kia"],
+                    "Hyunday"],
+                ["Mazda", "Mercedes", "Jeep",
+                    ["KTM", "Nissan", "Isuzu"]]];
+
+        let objeto = document.getElementById("carrakos");
+
+        let crearLista = (array, objeto) => {
+            array.map(e => {
+                if (Array.isArray(e)) {
+                    let nodoRaiz = document.createElement("ul");
+                    // Vincular el nodo Text como hijo del nodo Element
+                    objeto.appendChild(nodoRaiz);
+                    crearLista(e, nodoRaiz)
+                } else {
+                    // Crear nodo de tipo li
+                    let nodoCoche = document.createElement("li");
+                    let texto = document.createTextNode(e);
+                    nodoCoche.appendChild(texto);
+                    objeto.appendChild(nodoCoche);
+                }
+            })
+        }
+        crearLista(carrakos, objeto);
+    </script>
+</body>
+
+</html>
