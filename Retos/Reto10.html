@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>retos JavaScript</title>
+</head>
+
+<body>
+    <h1>retos JavaScript</h1>
+    <ul id="carrakos"> </ul>
+
+    <script>
+        var vikings = '{"vikings":[{"reino":"Noruega","reyes":["Hakon","Harald","Ivar","Olaf","Bjorn","Ragnar"]},{"reino":"Dinamarca","reyes":["Frodo","Hamming","Angantyr","Horik"]}]}';
+        vikings = JSON.parse(vikings);
+        let objeto = document.getElementById("vikings");
+
+        var fueRey = (nombre) => {
+            if (vikings.vikings.find(x => x.reyes.find(c => c == nombre)) !== undefined) {
+                return nombre + " fue rey";
+            } else {
+                return nombre + " No fue rey";
+            }
+        }
+        console.log(fueRey("Frodo"));
+
+
+    </script>
+</body>
+
+</html>

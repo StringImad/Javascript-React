@@ -28,8 +28,11 @@
                 } else {
                     // Crear nodo de tipo li
                     let nodoCoche = document.createElement("li");
-                    xungos.map(e=>e.nombre)
-                    let texto = document.createTextNode(e);
+                    let texto;
+                    let objXungo = xungos.find(x => x.carros.find(c => c == e))
+                    typeof objXungo == "undefined" ?
+                        texto = document.createTextNode(e + "") :
+                        texto = document.createTextNode(e + " de " + objXungo.nombre);
                     nodoCoche.appendChild(texto);
                     objeto.appendChild(nodoCoche);
                 }
