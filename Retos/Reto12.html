@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>retos JavaScript</title>
+  </head>
+
+  <body>
+    <h1>retos JavaScript</h1>
+    <ul id="carrakos"></ul>
+
+    <script>
+      let carrakos = [
+        "Chevrolet",
+        "Tesla",
+        "BMW",
+        ["Honda", "Infiniti", ["Lexus", "Mercedes", "Kia"], "Hyunday"],
+        ["Mazda", "Mercedes", "Jeep", ["KTM", "Nissan", "Isuzu"]],
+      ];
+      let xungos = [
+        { nombre: "Bruce Lee", carros: ["Chevrolet", "Tesla", "BMW"] },
+        { nombre: "Steven Seagal", carros: ["Mazda", "Jeep", "Nissan"] },
+        { nombre: "YakiChan", carros: ["Lexus", "Mercedes", "Kia"] },
+      ];
+
+
+      let crearLista = (array, listaNueva) => {
+        array.map((e) => {
+          if (Array.isArray(e)) {
+
+            crearLista(e, listaNueva);
+          } else {
+            // Crear nodo de tipo li
+            let objXungo = xungos.find((x) => x.carros.find((c) => c == e));
+            typeof objXungo == "undefined"
+              ? (listaNueva.push({nombre:e,propietario: "nadie"}))
+              : (listaNueva.push({nombre:e,propietario: objXungo.nombre}));
+   
+          }
+        });
+      };
+      var listaNueva = [];
+      crearLista(carrakos, listaNueva);
+      console.log(listaNueva);
+    </script>
+  </body>
+</html>
