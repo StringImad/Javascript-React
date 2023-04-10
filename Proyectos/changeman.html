@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change Man</title>
+  </head>
+  <body>
+    <ol id="lista"></ol>
+
+    <script>
+      changeMan(document.getElementById("lista"), "JOSE", "PEPE");
+      function changeMan(obj, man1, man2) {
+        // Verificamos si el elemento es un li
+        if (obj.tagName === "LI") {
+          // Comparamos el texto con man1 
+          if (obj.innerHTML == man1) {
+            // Cambia  a man2
+            obj.innerHTML = man2;
+          }
+        } else {
+          // Si no es un li llama a la función para los hijos haciendo uso de la recursividad
+          Array.from(obj.children).map((c) => changeMan(c, man1, man2));
+        }
+      }
+    </script>
+  </body>
+</html>
