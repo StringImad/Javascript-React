@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <body>
-    <!DOCTYPE html>
-    <html>
-
-    <body>
-        <h2>kulevrilla Zostérica</h2>
-        <script>
-            var arr = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+    <h2>kulevrilla Zostérica</h2>
+    <script>
+        var arr = [
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
             [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
             [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
             [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
@@ -18,13 +14,101 @@
             [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
             [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
 
+        ];
+        console.table(arr);
+
+        let fila = 4;
+        let columna = 6;
+
+
+        //Genera un aleatorio
+        function generateRandomInt(min, max) {
+            return Math.floor((Math.random() * (max - min)) + min);
+        }
+
+        //funcion que determina si las celdas vecinas de la posición contiene  "*" y están vacías, es decir, no son iguales a la posición actual (x, y) en la matriz.
+        function vecinas_vacias(matriz, x, y, j, k) {
+            var vecinas = [
+                [j - 1, k],   // vecina a la izquierda
+                [j + 1, k],   // vecina a la derecha
+                [j, k - 1],   // vecina arriba
+                [j, k + 1]    // vecina abajo
             ];
-            function generateRandomInt(min, max) {
-                return Math.floor((Math.random() * (max - min)) + min);
+            // bucle que recorre cada celda vecina del array de vecinas
+            // for (let index = 0; index < vecinas.length; index++) {
+            //     if (v[0] != x && v[1] != y &&
+            //         v[0] >= 0 && v[0] < matriz.length &&
+            //         v[1] >= 0 && v[1] < matriz[0].length &&
+            //         matriz[v[0]][v[1]] == "*") {
+            //         return false;
+            //     }
+            // }
+            for (let v of vecinas) {
+                //condicion que verifica que la celda no sea la misma ,
+                //verifica los limites de la matriz y de que la vecina no sea un *
+                if (v[0] != x && v[1] != y &&
+                    v[0] >= 0 && v[0] < matriz.length &&
+                    v[1] >= 0 && v[1] < matriz[0].length &&
+                    matriz[v[0]][v[1]] == "*") {
+                    return false;
+                }
+            }
+            // Si no  encuentra ninguna celda vecina que contenga "*" y no esté vacía devuelve true indicando que todas las celdas vecinas están vacías
+            return true;
+        }
+
+        //empieza el juego y no acaba hasta que se salga
+        function partida(matriz, x, y, probadas) {
+            // Direcciones posibles
+            const direcciones = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+            // condicion que termina el juego si pasa por todas las direcciones si exito
+            if (probadas.length === direcciones.length) {
+                console.log("-----------probadas = direcciones.length------------------")
+                return; // Fin de la partida
             }
 
-            console.log(arr)
-        </script>
-    </body>
+            let direccionValida = false;
 
-    </html>
+            while (!direccionValida) {
+                if (probadas.length === direcciones.length) {
+                    // Todas las direcciones han sido probadas, no se encontró una dirección válida
+                    break;
+                }
+
+                const n = generateRandomInt(0, direcciones.length); // Dirección aleatoria
+                const direccion = direcciones[n];
+
+                const dirX = x + direccion[0];
+                const dirY = y + direccion[1];
+
+                // Comprueba no salirse del tablero, que la casilla a la que avanza esté vacía y que ésta tenga sus vecinas vacías
+                if (dirX >= 0 && dirX < matriz.length && dirY >= 0 && dirY < matriz[0].length &&
+                    matriz[dirX][dirY] !== "*" && vecinas_vacias(matriz, x, y, dirX, dirY)) {
+                    matriz[dirX][dirY] = "*"; // Si está todo OK, avanza la serpiente
+                    console.log("-----------TODO OK------------------")
+
+                    probadas.length = 0; // Reinicia el conjunto de intentos fallidos, ya que avanzamos de casilla
+                    partida(matriz, dirX, dirY, probadas); // Sigue el partida
+                    direccionValida = true;
+                } else {
+                    probadas.push(n); // Agrega la dirección a las probadas
+                }
+            }
+        }
+
+
+
+
+
+        var probadas = []; //Aqui almacenaremos los numeros de case con intento fallido
+
+
+        partida(arr, fila, columna, probadas);
+        console.log(arr);
+
+
+    </script>
+</body>
+
+</html>
