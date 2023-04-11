@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confinaman Imad El Fahssi</title>
+</head>
+
+<body>
+    <ol id="lista1">
+        <li>Perico</li>
+        <li>Juanico</li>
+        <ul>
+            <li>Jose</li>
+            <ul>
+                <li>Roman</li>
+                <li>Marco</li>
+                <li>Rodrigo</li>
+            </ul>
+            <li>Jose</li>
+            <li>Lorenzo</li>
+            <ul>
+                <li>Dimas</li>
+                <li>Gestas</li>
+                <li>Malakatos</li>
+                <li>Jose</li>
+            </ul>
+        </ul>
+        <li>Sofoclis</li>
+    </ol>
+
+    <ol id="lista2">
+        <li>Periquin</li>
+        <li>Juanele</li>
+        <li>Jose</li>
+    </ol>
+    <script>
+        var personas = document.getElementById("lista1");
+        var contagiados = document.getElementById("lista2");
+    
+        console.log(personas);
+        console.log(contagiados);
+
+        let crearLista = (array, objeto) => {
+            array.map(e => {
+                if (Array.isArray(e)) {
+                    let nodoRaiz = document.createElement("ol");
+                    // Vincular el nodo Text como hijo del nodo Element
+                    objeto.appendChild(nodoRaiz);
+                    crearLista(e, nodoRaiz)
+                } else {
+                    // Crear nodo de tipo li
+                    let nodoCoche = document.createElement("li");
+                    let texto;
+                    let objXungo = contagiados.find(x => x.find(c => c == e))
+                    typeof objXungo == "undefined" ?
+                        texto = document.createTextNode(e + "") :
+                        texto = document.createTextNode(e + " de " + objXungo);
+                    nodoCoche.appendChild(texto);
+                    objeto.appendChild(nodoCoche);
+                }
+            })
+        }
+        crearLista(personas, contagiados);
+
+    </script>
+</body>
+
+
+</html>

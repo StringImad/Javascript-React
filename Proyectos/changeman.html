@@ -7,23 +7,50 @@
     <title>Change Man</title>
   </head>
   <body>
-    <ol id="lista"></ol>
+    <ol id="lista">
+      <li>Perico</li>
+      <li>Juanico</li>
+      <ul>
+      <li>Jose</li>
+      <ul>
+      <li>Roman</li>
+      <li>Marco</li>
+      <li>Rodrigo</li>
+      </ul>
+      <li>Jose</li>
+      <li>Lorenzo</li>
+      <ul>
+      <li>Dimas</li>
+      <li>Gestas</li>
+      <li>Malakatos</li>
+      <li>Jose</li>
+      </ul>
+      </ul>
+      <li>Sofoclis</li>
+      </ol>
 
     <script>
-      changeMan(document.getElementById("lista"), "JOSE", "PEPE");
+   
+      
       function changeMan(obj, man1, man2) {
         // Verificamos si el elemento es un li
-        if (obj.tagName === "LI") {
-          // Comparamos el texto con man1 
-          if (obj.innerHTML == man1) {
-            // Cambia  a man2
-            obj.innerHTML = man2;
-          }
+        console.log(obj.tagName);
+        if (obj.tagName == "LI") {
+          console.log(obj.textContent.trim().toUpperCase());
+          // Comparamos el texto con man1 quitanos espacios e igualamos todo a mayusulas 
+          if (obj.textContent.trim().toUpperCase() == man1.toUpperCase()) {
+                    // Cambiamos a man2
+                    obj.textContent = man2;
+                }
         } else {
           // Si no es un li llama a la función para los hijos haciendo uso de la recursividad
-          Array.from(obj.children).map((c) => changeMan(c, man1, man2));
+          Array.from(obj.children).map((v) => changeMan(v, man1, man2));
         }
       }
+
+      changeMan(document.getElementById("lista"),'JOSE','PEPE');
+
+      
     </script>
   </body>
 </html>
