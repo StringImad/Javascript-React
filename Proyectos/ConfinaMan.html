@@ -39,31 +39,67 @@
     <script>
         var personas = document.getElementById("lista1");
         var contagiados = document.getElementById("lista2");
-    
-        console.log(personas);
-        console.log(contagiados);
 
-        let crearLista = (array, objeto) => {
-            array.map(e => {
-                if (Array.isArray(e)) {
-                    let nodoRaiz = document.createElement("ol");
-                    // Vincular el nodo Text como hijo del nodo Element
-                    objeto.appendChild(nodoRaiz);
-                    crearLista(e, nodoRaiz)
-                } else {
-                    // Crear nodo de tipo li
-                    let nodoCoche = document.createElement("li");
-                    let texto;
-                    let objXungo = contagiados.find(x => x.find(c => c == e))
-                    typeof objXungo == "undefined" ?
-                        texto = document.createTextNode(e + "") :
-                        texto = document.createTextNode(e + " de " + objXungo);
-                    nodoCoche.appendChild(texto);
-                    objeto.appendChild(nodoCoche);
-                }
-            })
+
+        //Comparar la lista1 buscando a los de la lista 2
+        function comparar(obj, con) {
+            if (obj.tagName == "LI") {
+                console.log(obj.textContent.trim().toUpperCase());
+
+                if (obj.innerHTML == con)
+                    Array.from(obj.parentNode.children).map(v => {
+                        //añadir la (C) y a sus hermanos tambien
+                        if (v.tagName == "LI")
+                            v.innerHTML += "(C)";
+                    });
+
+            } else {
+                // Si no es un li llama a la función para los hijos haciendo uso de la recursividad
+                Array.from(obj.children).map(v => comparar(v, con))
+
+            }
         }
-        crearLista(personas, contagiados);
+
+        function nombreContagiados(nombre) {
+            if (nombre.tagName == "LI") {
+                comparar(personas, nombre.innerHTML);
+            } else {
+                Array.from(nombre.children).map(e => nombreContagiados(e));
+            }
+        }
+        nombreContagiados(contagiados);
+
+
+
+        //Funcion flecha 
+
+        const comparar2 = (obj, con) => {
+            if (obj.tagName == "LI") {
+                console.log(obj.textContent.trim().toUpperCase());
+
+                if (obj.innerHTML == con)
+                    Array.from(obj.parentNode.children).map(v => {
+                        //añadir la (C) y a sus hermanos tambien
+                        if (v.tagName == "LI")
+                            v.innerHTML += "(C)";
+                    });
+
+            } else {
+                // Si no es un li llama a la función para los hijos haciendo uso de la recursividad
+                Array.from(obj.children).map(v => comparar(v, con))
+
+            }
+        }
+
+        const nombreContagiados2 = (nombre) => {
+            if (nombre.tagName == "LI") {
+                comparar(personas, nombre.innerHTML);
+            } else {
+                Array.from(nombre.children).map(e => nombreContagiados(e));
+            }
+        }
+
+
 
     </script>
 </body>
