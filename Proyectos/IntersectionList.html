@@ -45,7 +45,57 @@
         var lista1 = document.getElementById("lista1");
         var lista2 = document.getElementById("lista2");
 
+        // Obtener los elementos de las listas
+        var elementosLista1 = Array.from(lista1.getElementsByTagName("li"));
+        var elementosLista2 = Array.from(lista2.getElementsByTagName("li"));
+        console.log("----------Lista 1-----------");
 
+        for (let index = 0; index < elementosLista1.length; index++) {
+            console.log(elementosLista1[index].innerHTML);
+        }
+        console.log("----------Lista 2---------------");
+        for (let index = 0; index < elementosLista2.length; index++) {
+            console.log(elementosLista2[index].innerHTML);
+        }
+        console.log("---------------------------------------------------------")
+        //Al crear una estructura set los valores no se repiten
+
+        const compararDuplicados=(array1, array2) =>{
+            // Recorrer los elementos de la lista 1
+            array1.map(function (v) {
+                // Quitar espacios y parsearlo a minus
+                var frutaElementoLista1 = v.innerHTML.trim().toLowerCase();
+
+                // Recorrer los elementos de la lista 2
+                array2.map(function (v2) {
+                    // Hacer lo mismo con la lista 2 quitar espacios y pasar a minus
+                    var frutaElementoLista2 = v2.innerHTML.trim().toLowerCase();
+
+                    // Comparar si las frutas son iguales y no están en la intersección
+                    //El método has de Set verifica si un valor está en un objeto Set
+                    if (frutaElementoLista1 === frutaElementoLista2 && !interseccionLista1Lista2.has(frutaElementoLista1)) {
+                        // Añadir la fruta a la intersección
+                        interseccionLista1Lista2.add(frutaElementoLista1);
+                    }
+                });
+            });
+
+        }
+        var interseccionLista1Lista2 = new Set();
+
+        compararDuplicados(elementosLista1, elementosLista2);
+
+        // Convertir la intersección a un array y ordenarla alfabéticamente
+        var interseccionLista1Lista2Array = Array.from(interseccionLista1Lista2);
+        interseccionLista1Lista2Array.sort();
+
+        // Mostrar la intersección por consola
+        console.log("Intersección:");
+        interseccionLista1Lista2Array.forEach(function (elemento) {
+            console.log("● " + elemento.toUpperCase());
+        });
+
+        
     </script>
 </body>
 
