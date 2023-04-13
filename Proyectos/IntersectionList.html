@@ -40,7 +40,10 @@
         <li>pera</li>
         <li>limon</li>
     </ul>
-
+    Tercera Lista:
+    <ul id="lista3">
+        
+    </ul>
     <script>
         var lista1 = document.getElementById("lista1");
         var lista2 = document.getElementById("lista2");
@@ -59,7 +62,6 @@
         }
         console.log("---------------------------------------------------------")
         //Al crear una estructura set los valores no se repiten
-
         const compararDuplicados=(array1, array2) =>{
             // Recorrer los elementos de la lista 1
             array1.map(function (v) {
@@ -85,15 +87,30 @@
 
         compararDuplicados(elementosLista1, elementosLista2);
 
-        // Convertir la intersección a un array y ordenarla alfabéticamente
+        // Convertir la intersección a un array y ordenarlo
         var interseccionLista1Lista2Array = Array.from(interseccionLista1Lista2);
         interseccionLista1Lista2Array.sort();
 
-        // Mostrar la intersección por consola
-        console.log("Intersección:");
-        interseccionLista1Lista2Array.forEach(function (elemento) {
-            console.log("● " + elemento.toUpperCase());
-        });
+  
+        let objeto = document.getElementById("lista3");
+
+        let crearLista = (array, objeto) => {
+            array.map(e => {
+                if (Array.isArray(e)) {
+                    let nodoRaiz = document.createElement("ul");
+                    // Vincular el nodo Text como hijo del nodo Element
+                    objeto.appendChild(nodoRaiz);
+                    crearLista(e, nodoRaiz)
+                } else {
+                    // Crear nodo de tipo li
+                    let nodoFruta = document.createElement("li");
+                    let texto = document.createTextNode(e);
+                    nodoFruta.appendChild(texto);
+                    objeto.appendChild(nodoFruta);
+                }
+            })
+        }
+        crearLista(interseccionLista1Lista2Array, objeto);
 
         
     </script>

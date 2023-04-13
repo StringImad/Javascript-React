@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RECURSIVIDAD</title>
+</head>
+
+<body>
+    <p>let array = [1,2,3,4];
+        Array.isArray(array); // true
+    </p>
+    <script>
+        let numeros =
+            [1,
+                [2, 3, 4],
+                [8, 15,
+                    [5, 1]],
+                27];
+        console.log(numeros)
+
+        // ESCRIBE TU CÓDIGO AQUÍ
+        function sumaRecursiva(numeros) {
+            let suma = 0;
+            for (let index = 0; index < numeros.length; index++) {
+                console.log("numeros[i] length: ", numeros.length);
+                if (Array.isArray(numeros[index])) {
+
+                    suma = suma + sumaRecursiva(numeros[index], suma);
+
+                } else {
+                    suma = suma + numeros[index];
+                }
+                console.log("suma: ", suma);
+
+            }
+
+            return suma;
+        }
+
+        console.log(sumaRecursiva(numeros));
+    </script>
+</body>
