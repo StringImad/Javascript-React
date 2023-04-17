@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>BOMBASSO</h2>
+    <p> Se pide que crees un programa que genere un campo de minas.
+        Las minas se colocan de forma aleatoria pero teniendo
+        en cuenta que no se deben colocar dos minas juntas.
+        realiza el programa para que genere 10, 20 o todas
+        las minas que se puedan instalar.
+    </p>
+    <p id="demo"></p>
+    <script>
+        var arr = [
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+
+        ];
+        console.table(arr);
+        function generateRandomInt(min, max) {
+            return Math.floor((Math.random() * (max - min)) + min);
+        }
+
+        /*COLOCA AQUÍ TU CÓDIGO*/
+        //constante con la cantidad de minas que vamos a colocar
+        const cantidad = 10;
+        //generar minas aleatorias en la matriz
+        function generarMinas(cantidad) {
+            var cantidadDeMinasColocadas = 0;
+            //bucle que se repite hasta que la cantidad de minas colocadas sea mayor o igual
+            //que la cantidad indicada
+            do {
+                //variables aleatorias que empiezan desde 0 hasta la longituid maxima posible
+                var fila = generateRandomInt(0, arr.length - 1);
+                var columna = generateRandomInt(0, arr[0].length - 1);
+                //si la posicion esta vacia colocamos la mina
+                //así controlamos la sobreposición
+                if (arr[fila][columna] === " ") {
+                    arr[fila][columna] = "*";
+                    cantidadDeMinasColocadas += 1;
+                }
+            } while (cantidadDeMinasColocadas < cantidad)
+        }
+        function generarMinasNuevasSiHayVecinas() {
+            const direcciones = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+console.log("Hay que generar vecinas nuevas: ");
+            for (var i = 0; i < arr.length; i++) {
+                console.log("--------------------Bucle1---------------");
+                for (var j = 0; j < arr[0].length; j++) {
+                    console.log("--------------------Bucle2---------------");
+
+
+                    if (arr[i][j] === "*") {
+                        // Verificar celdas vecinas
+                        console.log(vecinas_vacias(arr, i, j))
+                        if (!vecinas_vacias(arr, i, j)) {
+                            // Guardar la posición de las minas colocadas juntas
+                            generarMinas(1);
+                            generarMinasNuevasSiHayVecinas();
+
+                        }
+                    }
+                }
+            }
+        }
+        //funcion que determina si las celdas vecinas de la posición contiene  "*" y están vacías, es decir, no son iguales a la posición actual (x, y) en la matriz.
+        // function vecinas_vacias(arr, x, y, j, k) {
+
+        //     var vecinas = [
+        //         [j - 1, k],   // vecina a la izquierda
+        //         [j + 1, k],   // vecina a la derecha
+        //         [j, k - 1],   // vecina arriba
+        //         [j, k + 1]    // vecina abajo
+        //     ];
+
+        //     for (let v of vecinas) {
+        //         //condicion que verifica que la celda no sea la misma ,
+        //         //verifica los limites de la matriz y de que la vecina no sea un *
+        //         //el 0 corresponde a J y la posicion 1 a la k
+
+        //         if (v[0] != x && v[1] != y &&
+        //             v[0] >= 0 && v[0] < arr.length &&
+        //             v[1] >= 0 && v[1] < arr[0].length &&
+        //             arr[v[0]][v[1]] == "*") {
+        //             return false;
+        //         }
+        //     }
+        //     // Si no  encuentra ninguna celda vecina que contenga "*" y no esté vacía devuelve true indicando que todas las celdas vecinas están vacías
+        //     return true;
+        // }
+        vecinas_vacias = (matriz, fila_aleatoria, columna_aleatoria) => {
+
+let vacias = true;
+//Recorre una posicion antes y una despues en fila
+for (let i = fila_aleatoria - 1; i <= fila_aleatoria + 1; i++) {
+    //Lo mismo en columna
+    for (let j = columna_aleatoria - 1; j <= columna_aleatoria + 1; j++) {
+        //Descarta la posición de la casilla en sí
+        if (!(i == fila_aleatoria && j == columna_aleatoria)) {
+            //Controla no salirse de la matriz
+            if (i >= 0 && i < matriz.length && j >= 0 && j < matriz[0].length) {
+                //Si alguna de las posiciones no está vacía o espacio
+                if (matriz[i][j] != " " && matriz[i][j] != "") {
+
+                    vacias = false; //Devuelve false
+                    break;
+                }
+            }
+        }
+    }
+}
+
+return vacias;
+}
+
+        function crearCampoDeMinas(cantidad) {
+            generarMinas(cantidad);
+            generarMinasNuevasSiHayVecinas();
+        }
+        crearCampoDeMinas(cantidad);
+        console.table(arr);
+
+    </script>
+</body>
+
+</html>

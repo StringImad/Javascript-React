@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="lista"></ul>
+
+    <script>
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://localhost/DWEC/godos.php";
+        xmlhttp.onreadystatechange = function () {
+
+            if (this.readyState == 4 && this.status == 200) {
+
+                var listaReyesGodos = JSON.parse(this.responseText);
+                listaReyes(document.getElementById("lista"), listaReyesGodos);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        function listaReyes(lista, reyes) {
+
+            if (!Array.isArray(reyes))
+                reyes = reyes.reyesgodos;
+            //Recorre la lista
+            reyes.map(r => {
+
+                let li = document.createElement("li"); //Crea elemento li para cada uno
+                //Si no tiene descendientes
+                if (typeof r != "string") { //Si tiene descendientes
+
+                    let txt = document.createTextNode(r.nombre); //Añade el nombre
+                    li.appendChild(txt);
+
+                    let ul = document.createElement("ul"); //Crea lista para los hijos
+                    listaReyes(ul, r.hijos); //Llamada recursiva a los hijos
+                    li.appendChild(ul); //La añade al li del padre
+
+                } else { //No iene hijos
+
+
+                    let txt = document.createTextNode(r); //r es el nombre
+                    li.appendChild(txt);
+                }
+
+                lista.appendChild(li);
+            })
+        }
+    </script>
+</body>
+
+</html>

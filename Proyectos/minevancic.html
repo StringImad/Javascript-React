@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imad El Fahssi</title>
+</head>
+
+<body>
+    <script>
+        let minas = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0]
+        ];
+        function color(matriz) {
+            rodear =(x, y, valor) =>{
+                for (let i = x - 1; i <= x + 1; i++) {
+                    for (let j = y - 1; j <= y + 1; j++) {
+                        //Controla que no se salga del array
+                        if (i >= 0 && i < matriz.length && j >= 0 && j < matriz[0].length) {
+                            if (matriz[i][j] == 0 && valor < 6) { //No comprueba que no sea el mismo porque nunca será 0
+                                matriz[i][j] = valor;
+                            }
+                        }
+                    }
+                }
+            }
+
+            function buscaminas(valor) {
+                for (let i = 0; i < matriz.length; i++) {
+                    for (let j = 0; j < matriz.length; j++) {
+                        if (valor != 4) { //Si el valor no es 4
+                            if (matriz[i][j] == valor) { //Si encuentra el valor
+                                rodear(i, j, valor + 1); //La rodea del siguiente 
+                            }
+                        } else { //Si el valor es 4, rellena los vacíos con 5
+                            if (matriz[i][j] == 0) { //Si está vacío
+                                matriz[i][j] = 5;
+                            }
+                        }
+                    }
+                }
+            }
+
+            buscaminas(1);
+            buscaminas(2);
+            buscaminas(3);
+            buscaminas(4);
+
+            return matriz;
+        }
+        let resultado = color(minas);
+
+        console.table(resultado);
+
+    </script>
+</body>
+
+</html>

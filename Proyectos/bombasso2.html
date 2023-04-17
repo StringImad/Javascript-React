@@ -22,7 +22,7 @@
             [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
             [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
         ];
-
+        console.table(arr);
         function generateRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
@@ -43,8 +43,11 @@
             }
         }
 
-        // Paso 2: Verificar restricciones de colocación de minas
+
+
         function verificarRestricciones() {
+            var minasColocadas = [];
+
             for (var i = 0; i < arr.length; i++) {
                 for (var j = 0; j < arr[0].length; j++) {
                     if (arr[i][j] === "*") {
@@ -53,11 +56,8 @@
                             for (var y = -1; y <= 1; y++) {
                                 if (i + x >= 0 && i + x < arr.length && j + y >= 0 && j + y < arr[0].length) {
                                     if (arr[i + x][j + y] === "*") {
-                                        // Si hay dos minas juntas, colocar la mina en otra posición
-                                        arr[i][j] = " ";
-                                        colocarMinas(1);
-                                        verificarRestricciones();
-                                        return;
+                                        // Guardar la posición de las minas colocadas juntas
+                                        minasColocadas.push([i, j]);
                                     }
                                 }
                             }
@@ -65,11 +65,24 @@
                     }
                 }
             }
-            // Caso base: Si se verificaron todas las celdas, retornar
-            return;
+
+            // Colocar minas en otra posición si hay dos minas juntas
+            for (var k = 0; k < minasColocadas.length; k++) {
+                var fila = minasColocadas[k][0];
+                var columna = minasColocadas[k][1];
+                arr[fila][columna] = " ";
+                colocarMinas(1);
+            }
+
+            // Salir de la recursión si no hay más minas que colocar
+            if (minasColocadas.length === 0) {
+                return;
+            }
         }
 
-        // Paso 3: Generar el campo de minas
+
+
+        //Generar el campo de minas
         function generarCampoDeMinas(numMinas) {
             colocarMinas(numMinas);
             verificarRestricciones();
@@ -77,6 +90,7 @@
 
         // Llamar a la función generarCampoDeMinas con la cantidad de minas deseada
         generarCampoDeMinas(10);
+        console.table(arr);
 
 
         /*COLOCA AQUÍ TU CÓDIGO*/

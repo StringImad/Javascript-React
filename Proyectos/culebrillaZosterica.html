@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <body>
     <h2>kulevrilla Zostérica</h2>
     <script>
@@ -27,7 +28,7 @@
         }
 
         //funcion que determina si las celdas vecinas de la posición contiene  "*" y están vacías, es decir, no son iguales a la posición actual (x, y) en la matriz.
-        function vecinas_vacias(matriz, x, y, j, k) {
+        function vecinosVacios(matriz, x, y, j, k) {
             var vecinas = [
                 [j - 1, k],   // vecina a la izquierda
                 [j + 1, k],   // vecina a la derecha
@@ -46,6 +47,7 @@
             for (let v of vecinas) {
                 //condicion que verifica que la celda no sea la misma ,
                 //verifica los limites de la matriz y de que la vecina no sea un *
+                //el 0 corresponde a J y la posicion 1 a la k
                 if (v[0] != x && v[1] != y &&
                     v[0] >= 0 && v[0] < matriz.length &&
                     v[1] >= 0 && v[1] < matriz[0].length &&
@@ -56,6 +58,7 @@
             // Si no  encuentra ninguna celda vecina que contenga "*" y no esté vacía devuelve true indicando que todas las celdas vecinas están vacías
             return true;
         }
+        
 
         //empieza el juego y no acaba hasta que se salga
         function partida(matriz, x, y, probadas) {
@@ -84,7 +87,7 @@
 
                 // Comprueba no salirse del tablero, que la casilla a la que avanza esté vacía y que ésta tenga sus vecinas vacías
                 if (dirX >= 0 && dirX < matriz.length && dirY >= 0 && dirY < matriz[0].length &&
-                    matriz[dirX][dirY] !== "*" && vecinas_vacias(matriz, x, y, dirX, dirY)) {
+                    matriz[dirX][dirY] !== "*" && vecinosVacios(matriz, x, y, dirX, dirY)) {
                     matriz[dirX][dirY] = "*"; // Si está todo OK, avanza la serpiente
                     console.log("-----------TODO OK------------------")
 

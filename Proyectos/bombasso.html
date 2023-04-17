@@ -11,90 +11,66 @@
     </p>
     <p id="demo"></p>
     <script>
-        var arr = [
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+
+        var arr = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
 
         ];
         console.table(arr);
         function generateRandomInt(min, max) {
-            return Math.floor((Math.random() * (max - min)) + min);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-
-        /*COLOCA AQUÍ TU CÓDIGO*/
-        //constante con la cantidad de minas que vamos a colocar
-        const cantidad = 10;
-        //generar minas aleatorias en la matriz
-        function generarMinas(cantidad) {
-            var cantidadDeMinasColocadas = 0;
-            //bucle que se repite hasta que la cantidad de minas colocadas sea mayor o igual
+        function colocarMinas(numMinas) {
+            var minasColocadas = 0;
+            //bucle que se repite hasta que la cantidad de minas colocadas sea  igual
             //que la cantidad indicada
-            do {
-                //variables aleatorias que empiezan desde 0 hasta la longituid maxima posible
+            while (minasColocadas < numMinas) {
+                                //variables aleatorias que empiezan desde 0 hasta la longituid maxima posible
+
                 var fila = generateRandomInt(0, arr.length - 1);
                 var columna = generateRandomInt(0, arr[0].length - 1);
-                //si la posicion esta vacia colocamos la mina
-                //así controlamos la sobreposición
+
+                // Verificar si la celda está vacía antes de colocar la mina y si no hay minas en las celdas vecinas
                 if (arr[fila][columna] === " ") {
-                    arr[fila][columna] = "*";
-                    cantidadDeMinasColocadas += 1;
-                }
-            } while (cantidadDeMinasColocadas < cantidad)
-        }
-        function generarMinasNuevasSiHayVecinas() {
-          
-            for (var i = 0; i < arr.length; i++) {
-                for (var j = 0; j < arr[0].length; j++) {
-      
+                    var vecinosLibres = true;
 
-                    if (arr[i][j] === "*") {
-                        // Verificar celdas vecinas
-                        console.log(vecinas_vacias(arr, i, j, i, j))
-                        if (!vecinas_vacias(arr, i, j, i, j)) {
-                            // Guardar la posición de las minas colocadas juntas
-                            generarMinas(1);
-                            generarMinasNuevasSiHayVecinas();
-
+                    for (var x = -1; x <= 1; x++) {
+                        for (var y = -1; y <= 1; y++) {
+                            if (fila + x >= 0 && fila + x < arr.length && columna + y >= 0 && columna + y < arr[0].length) {
+                                if (arr[fila + x][columna + y] === "*") {
+                                    vecinosLibres = false;
+                                    break;
+                                }
+                            }
                         }
+                        if (!vecinosLibres) {
+                            break;
+                        }
+                    }
+
+                    if (vecinosLibres) {
+                        arr[fila][columna] = "*";
+                        minasColocadas++;
                     }
                 }
             }
         }
-        //funcion que determina si las celdas vecinas de la posición contiene  "*" y están vacías, es decir, no son iguales a la posición actual (x, y) en la matriz.
-        function vecinas_vacias(matriz, x, y, j, k) {
-            var vecinas = [
-                [j - 1, k],   // vecina a la izquierda
-                [j + 1, k],   // vecina a la derecha
-                [j, k - 1],   // vecina arriba
-                [j, k + 1]    // vecina abajo
-            ];
 
-            for (let v of vecinas) {
-                //condicion que verifica que la celda no sea la misma ,
-                //verifica los limites de la matriz y de que la vecina no sea un *
-                if (v[0] != x && v[1] != y &&
-                    v[0] >= 0 && v[0] < matriz.length &&
-                    v[1] >= 0 && v[1] < matriz[0].length &&
-                    matriz[v[0]][v[1]] == "*") {
-                    return false;
-                }
-            }
-            // Si no  encuentra ninguna celda vecina que contenga "*" y no esté vacía devuelve true indicando que todas las celdas vecinas están vacías
-            return true;
+        //Generar el campo de minas
+        function generarCampoDeMinas(numMinas) {
+            colocarMinas(numMinas);
+            console.table(arr);
         }
-        function crearCampoDeMinas(cantidad){
-            generarMinas(cantidad);
-            generarMinasNuevasSiHayVecinas();
-        }
-        crearCampoDeMinas(cantidad);
-        console.table(arr);
+
+        // Llamar a la función generarCampoDeMinas con la cantidad de minas deseada
+        generarCampoDeMinas(20);
 
     </script>
 </body>

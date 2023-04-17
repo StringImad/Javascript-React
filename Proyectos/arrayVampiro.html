@@ -1,0 +1,33 @@
+<html>
+
+<head>
+  <title>ARRAY VAMPIRO</title>
+</head>
+
+<body>
+  <h1>ARRAY VAMPIRO</h1>
+  <script>
+    let array = [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1, 0];
+    /*INCLUYE TU CÓDIGO AQUÍ*/
+    console.log(vampus(0, array) ? "Es un array vampiro" : "No es un array vampiro"
+    );
+
+    function vampus(posicion, array) {
+      let final = array.length - 1 - posicion;
+
+
+      // console.log("Primera valor del array: ", array[posicion], " posicion: ", posicion);
+      // console.log("Ultima valor del array: ", array[(array.length - contador)] + " posicion: " + (array.length - contador));
+      // Comprobar si los elementos desde el inicio hasta el final son iguales
+      for (let i = 0; i <= array.length - 1 - posicion; i++) {
+        if (array[posicion + i] !== array[final - i]) {
+          return false; // Si no coinciden no es un array vampiro
+        }
+      }
+      return true;
+
+    }
+  </script>
+</body>
+
+</html>
