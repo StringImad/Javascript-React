@@ -3,7 +3,7 @@ import { Component } from "react";
 import { Button } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // recibe una lista de botones y los renderiza en pantalla
-const ListaBotones = (props) => {
+const MapaBotones = (props) => {
   let lista = [];
   // Recorremos la lista de botones y creamos una lista auxiliar para almacenar cada fila de botones
   for (let i = 0; i < props.listaBotones.length; i++) {
@@ -14,7 +14,7 @@ const ListaBotones = (props) => {
         <Button
           key={i * 10 + j}
           color={props.listaBotones[i][j].color}
-          onClick={() => props.accionClicar(i, j)}
+          onClick={() => props.clica(i, j)}
           disabled={props.listaBotones[i][j].disabled}
         />
       );
@@ -58,7 +58,7 @@ class App extends Component {
     this.setState({ listaBotones: l });
   }
 
-  accionClicar(i, j) {
+  clica(i, j) {
     let l = this.state.listaBotones;
     // Si el botón no está pulsado lo pulsamos
     if (!l[i][j].pulsado) {
@@ -76,7 +76,8 @@ class App extends Component {
         l[i][j].color =
           this.state.listaColores[
             Math.floor(Math.random() * this.state.listaColores.length)
-          ]; // Coloreamos aleatoriamente
+          ]; 
+          // Coloreamos aleatoriamente
         this.setState({ colorActivo: l[i][j].color });
       }
     } else {
@@ -90,9 +91,9 @@ class App extends Component {
   render() {
     return (
       <>
-        <ListaBotones
+        <MapaBotones
           listaBotones={this.state.listaBotones}
-          accionClicar={(i, j) => this.accionClicar(i, j)}
+          clica={(i, j) => this.clica(i, j)}
         />
       </>
     );
