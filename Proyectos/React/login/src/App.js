@@ -46,6 +46,7 @@ class App extends Component {
       password: md5(password)
     }))
       .then(res => {
+        console.log(res);
         if (res.data.usuario !== undefined) {
           this.setState({ logged: true });
         }
