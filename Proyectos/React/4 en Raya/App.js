@@ -12,7 +12,7 @@ const MapaBotones = (props) => {
     for (let j = 0; j < props.listaBotones[i].length; j++) {
       lista2.push(
         <Button
-        //identificador unico para cada boton
+          //identificador unico para cada boton
           key={i * 10 + j}
           color={props.listaBotones[i][j].color}
           onClick={() => props.clica(i, j)}
@@ -26,7 +26,7 @@ const MapaBotones = (props) => {
         {lista2}
         <br />
       </>
-    ); 
+    );
   }
   return <>{lista}</>;
 };
@@ -40,7 +40,6 @@ class App extends Component {
       listaColores: ["primary", "danger"],
       colorActivo: "primary",
       botonActivo: null,
-
     };
 
     this.carga();
@@ -78,7 +77,7 @@ class App extends Component {
         // Si no hay ningún botón adyacente pulsado, cambiamos el color del botón actual de forma aleatoria
         l[i][j].color =
           this.state.listaColores[
-          Math.floor(Math.random() * this.state.listaColores.length)
+            Math.floor(Math.random() * this.state.listaColores.length)
           ];
         // Coloreamos aleatoriamente
         this.setState({ colorActivo: l[i][j].color });
